@@ -3,6 +3,7 @@ import math
 import random
 wn=turtle.Screen()
 wn.bgcolor('Black')
+wn.title("A Maze Game")
 
 wn.setup(700,700)
 wn.tracer(0)
@@ -27,7 +28,7 @@ class Player(turtle.Turtle):
         self.shape("right.gif")
         self.color("blue")
         self.penup()
-        self.speed(0)
+        self.speed(10)
         self.gold=0
     def go_up(self):
         move_to_x=player.xcor() 
@@ -71,7 +72,7 @@ class Treasure(turtle.Turtle):
         self.shape("chest.gif")
         self.color("gold")
         self.penup()
-        self.speed(0)
+        self.speed(10)
         self.gold=100
         self.goto(x,y)
     def destroy(self):
@@ -83,7 +84,7 @@ class Enemy(turtle.Turtle):
         self.shape("en.gif")
         self.color("red")
         self.penup()
-        self.speed(0)
+        self.speed(10)
         self.gold=25
         self.goto(x,y)
         self.direction=random.choice(["up", "down", "left", "right"])
@@ -124,11 +125,12 @@ class Enemy(turtle.Turtle):
         else:
             self.direction=random.choice(["up", "down", "left", "right"])
         turtle.ontimer(self.move,t=random.randint(100,300))
+        
     def is_close(self, other):
         a=self.xcor()-other.xcor()
         b=self.ycor()-other.ycor()
         d=math.sqrt((a**2)+(b**2))
-        if d<75:
+        if d<20:
             return True
         else:
             return False
@@ -139,29 +141,29 @@ class Enemy(turtle.Turtle):
 levels=[""]
 lvl_1=[
 "XXXXXXXXXXXXXXXXXXXXXXXXX",
-"X  XXXXXXP          XXXXX",
+"X  XXXXXXP  E       XXXXX",
 "X  XXXXXXX  XXXXXX  XXXXX",
 "XE      XX  XXXXXX  XXXXX",
-"X       XX  XXX        XX",
+"X       XX  XXX    T   XX",
 "XXXXXX  XX  XXX        XX",
 "XXXXXX  XX  XXXXXX  XXXXX",
 "XXXXXX  XX    XXXX  XXXXX",
 "X  XXX T      XXXX  XXXXX",
 "X  XXX  XXXXXXXXXXXXXXXXX",
 "X E       XXXXXXXXXXXXXXX",
-"X                XXXXXXXX",
+"X     E          XXXXXXXX",
 "XXXXX  XX XX    XXXXXXXXX",
 "XXX    XXXXXXX   XXXXXXXX",
-"XX     XXXXXXXXXXXXXXXXXX",    
+"XXT T  XXXXXX   XXXXXXXXX",    
 "XXX   XX   XX      XXXXXX",
-"XX     XXXXX            X",
+"XX     XXXXX  T         X",
 "XX    XXXXXXXXXX   XXXXXX",
 "XX  XXXX XX             X",
 "XX     XXXXXXXXXXXXXXXXXX",
 "X   XXXXXXXXXXXXXXXXXXXXX",
-"XX                 XXXXXX",
-"X      XXXXXXXXXXXX   XXX",
-"XXXX                    X",
+"XX   T    E      T XXXXXX",
+"X      XX   XX XXXX   XXX",
+"XXXX       E            X",
 "XXXXXXXXXXXXXXXXXXXXXXXXX"
 ]
 treasures=[]
@@ -209,7 +211,27 @@ while True:
     for enemy in enemies:
         if player.is_collision(enemy):
             print("You died!")
-            exit()
+            turtle.bye()
+    if player.gold==100:
+        # turtle.bye()
+        w=turtle.Screen()
+        w.bgcolor('Green')
+        w.title("Yay!")
+
+        w.setup(700,700)
+        turtle.color("black")
+        # style = ('Arial', 80, 'italic')
+        turtle.width(4)
+        turtle.write("YOU WON!", font=1000, align='center')
+        # turtle. color(' black')
+        # style = ('Arial', 30, 'italic')
+        # turtle.write('Hello!', font=style, align='center')
+        # turtle.hideturtle()
+        turtle.done()
+        
+        turtle.bye()
+
+        
     wn.update()
 
 turtle.done()
