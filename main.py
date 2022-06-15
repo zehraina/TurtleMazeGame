@@ -2,9 +2,10 @@ import turtle
 import math
 import random
 wn=turtle.Screen()
+tr=turtle.Turtle()
+wn.bgpic("bc.gif")
 wn.bgcolor('Black')
 wn.title("A Maze Game")
-
 wn.setup(700,700)
 wn.tracer(0)
 turtle.register_shape("right.gif")
@@ -12,7 +13,6 @@ turtle.register_shape("left2.gif")
 turtle.register_shape("chest.gif")
 turtle.register_shape("en.gif")
 turtle.register_shape("wall.gif")
-
 class Pen(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
@@ -20,8 +20,6 @@ class Pen(turtle.Turtle):
         self.color("white")
         self.penup()
         self.speed(0)
-        
-
 class Player(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
@@ -64,8 +62,6 @@ class Player(turtle.Turtle):
             return True
         else:
             return False
-
-
 class Treasure(turtle.Turtle):
     def __init__(self,x,y):
         turtle.Turtle.__init__(self)
@@ -166,9 +162,11 @@ lvl_1=[
 "XXXX       E            X",
 "XXXXXXXXXXXXXXXXXXXXXXXXX"
 ]
+
 treasures=[]
 enemies=[]
 levels.append(lvl_1)
+
 def set_maze(level):
     for y in range(len(level)):
         for x in range(len(level[y])):
@@ -189,7 +187,6 @@ def set_maze(level):
 pen=Pen()
 player=Player()
 walls=[]
-
 set_maze(levels[1])
 print(walls)
 turtle.listen()
@@ -197,10 +194,10 @@ turtle.onkey(player.go_left,"Left")
 turtle.onkey(player.go_right,"Right")
 turtle.onkey(player.go_up,"Up")
 turtle.onkey(player.go_down,"Down")
-
 wn.tracer(0)
 for enemy in enemies:
     turtle.ontimer(enemy.move,t=250)
+
 while True:
     for treasure in treasures:
         if player.is_collision(treasure):
@@ -217,21 +214,20 @@ while True:
         w=turtle.Screen()
         w.bgcolor('Green')
         w.title("Yay!")
-
         w.setup(700,700)
         turtle.color("black")
         # style = ('Arial', 80, 'italic')
         turtle.width(4)
         turtle.write("YOU WON!", font=1000, align='center')
+        # turtle.bye()
         # turtle. color(' black')
         # style = ('Arial', 30, 'italic')
         # turtle.write('Hello!', font=style, align='center')
         # turtle.hideturtle()
+        # set_maze(levels[2])
         turtle.done()
         
-        turtle.bye()
 
-        
     wn.update()
 
 turtle.done()
